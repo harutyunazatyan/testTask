@@ -21,6 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', '\App\Http\Controllers\UserController@login');
 Route::post('/logout', '\App\Http\Controllers\UserController@logout');
-Route::get('/current', '\App\Http\Controllers\UserController@currentUser');
 
 Route::apiResource('subjects', \App\Http\Controllers\Api\SubjectController::class);

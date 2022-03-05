@@ -6,7 +6,7 @@
     <table class="table" v-if="subjects && subjects.length">
         <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col">Subject ID#</th>
             <th scope="col">Subject Name</th>
             <th scope="col">User name</th>
             <th scope="col">User ID</th>

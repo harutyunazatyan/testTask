@@ -1,7 +1,5 @@
 <template>
     <div class="container" style="margin-top:25px">
-        <span></span>
-
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" v-model="form.email" class="form-control" id="exampleInputEmail1"
@@ -16,8 +14,6 @@
 </template>
 
 <script>
-    import {onMounted} from 'vue';
-
     export default {
         name: 'App',
         data() {
