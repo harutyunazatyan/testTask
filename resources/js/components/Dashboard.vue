@@ -24,44 +24,28 @@
 </template>
 
 <script>
+    import { onMounted } from 'vue';
+    import useSubjects from "../compositable/subjects";
+    import useUsers from "../compositable/users";
+
     export default {
-        name: 'Dashboard',
-        data() {
-            return {}
-        },
-        mounted() {
-            this.$store.dispatch('getUsersWithSubjectsAction')
-        },
-        methods: {
-            logout()  {
-                axios.post('api/logout')
-                    .then(({data}) => {
-                        if (data.success) {
-                            Toast.fire({
-                                icon: 'success',
-                                title: data.message
-                            });
-                            this.$store.commit('setUser', null);
-                            this.$store.commit('setLoggedIn', false);
-                            this.$router.push('/login')
-                        } else {
-                            Toast.fire({
-                                icon: 'error',
-                                title: data.message
-                            });
-                        }
-                    });
-            },
-            getSubjects() {
-              return   this.$store.getters.getSubjects;
-            }
-        },
-        computed: {
-            user() {
-                return this.$store.getters.getUser;
-            },
-            subjects() {
-                return this.$store.getters.getSubjects;
+        setup() {
+            const { subjects, getSubjects } = useSubjects();
+            const { getUser, user , logoutForm} = useUsers();
+            onMounted(() => {
+                getSubjects();
+                getUser();
+            });
+
+
+            const logout = async () => {
+                await logoutForm();
+            };
+
+            return {
+                subjects,
+                logout,
+                user
             }
         }
     }

@@ -1,4 +1,8 @@
 <template>
+    <div class="mt-2 mb-6 text-sm text-red-600" v-if="errors !== ''">
+        {{ errors }}
+    </div>
+
     <div class="container" style="margin-top:25px">
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
@@ -9,43 +13,34 @@
             <label for="exampleInputPassword1">Password</label>
             <input type="password" v-model="form.password" class="form-control" id="exampleInputPassword1">
         </div>
-        <button type="submit" class="btn btn-primary" @click.prevent="submitForm">Submit</button>
+        <button type="submit" class="btn btn-primary" @click.prevent="loginUser">Submit</button>
     </div>
 </template>
 
 <script>
+    import { onMounted } from 'vue';
+    import useUsers from "../compositable/users";
+    import { reactive } from 'vue'
+
     export default {
-        name: 'App',
-        data() {
+        setup() {
+            const form = reactive({
+                email: '',
+                password: '',
+            });
+
+            const { errors, user, submitForm } = useUsers();
+
+            const loginUser = async () => {
+                console.log(123)
+                await submitForm({...form})
+            };
+
             return {
-                form: new Form({
-                    email: null,
-                    password: null,
-                })
-            }
-        },
-        methods: {
-            submitForm() {
-                axios.post('api/login', this.form.data(), {
-                    'Accept': 'application/json',
-                    'Content-Type': 'multipart/form-data',
-                })
-                    .then(({data}) => {
-                        if (data.success) {
-                            Toast.fire({
-                                icon: 'success',
-                                title: data.data.message
-                            });
-                            this.$store.commit('setUser', data.data.user);
-                            this.$store.commit('setLoggedIn', true);
-                            this.$router.push('/dashboard')
-                        } else {
-                            Toast.fire({
-                                icon: 'error',
-                                title: data.data.message
-                            });
-                        }
-                    });
+                form,
+                errors,
+                user,
+                loginUser
             }
         }
     }

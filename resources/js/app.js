@@ -4,10 +4,8 @@ import App from './components/App';
 import router from './router/router';
 import store from './store/store';
 import { createApp } from 'vue';
-import {Form, HasError, AlertError} from 'vform';
 
 window.Form = Form;
-// require('alpinejs');
 import Swal from 'sweetalert2';
 
 const Toast = Swal.mixin({
